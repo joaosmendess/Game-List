@@ -5,26 +5,33 @@ import GenreFilter from "../../components//GenreFilter";
 import Loader from "../../components//Loader";
 import SearchInput from "../../components/SearchInput";
 
-import {Container,ErrorMessage} from './style'
+import {Container,ErrorMessage } from './style'
 const API_BASE_URL = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
 const headers = {
     'dev-email-address': 'joaosilva0721@gmail.com',
   };
 
+
+  interface Game {
+    title: string;
+    thumbnail: string;
+    genre: string;
+  }
  
   
 const Home: React.FC = () => {
-  const [games, setGames] = useState([]);
-  const [filteredGames, setFilteredGames] = useState([]);
+  const [games, setGames] = useState<Game[]>([]);
+  const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [searchText, setSearchText] = useState("");
+  
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(API_BASE_URL, { headers });
+      const response = await axios.get<Game[]>(API_BASE_URL, { headers });
       setGames(response.data);
       setLoading(false);
       setErrorMessage("");
@@ -45,7 +52,7 @@ const Home: React.FC = () => {
     fetchData();
   }, []);
 
-  const handleGenreSelect = (genre) => {
+  const handleGenreSelect = (genre: string) => {
     setSelectedGenre(genre);
     if (genre === "") {
       setFilteredGames(games);
@@ -56,7 +63,7 @@ const Home: React.FC = () => {
   };
 
 
-  const handleSearch = (searchText) => {
+  const handleSearch = (searchText: string) => {
     setSearchText(searchText);
     if (searchText === "") {
       setFilteredGames(games);
@@ -69,10 +76,24 @@ const Home: React.FC = () => {
   };
   
     return (
-      <Container>
-     <h1>ola mundo</h1>
       
-    </Container>
+     
+     <Container>
+    
+    <SearchInput onSearch={handleSearch} />
+    <GenreFilter games={games} onGenreSelect={handleGenreSelect} />
+    {loading ? (
+      <Loader />
+    ) : errorMessage ? (
+      <ErrorMessage>{errorMessage}</ErrorMessage>
+    ) : (
+      <GameList games={filteredGames} />
+    )}
+
+
+  </Container>
+      
+    
     );
   };
   
