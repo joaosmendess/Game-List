@@ -1,11 +1,11 @@
 import React from "react";
-import GameCard from "./components/GameCard";
 
+import Home from "./Pages/Home";
 const App: React.FC = () => {
  
 
   return (
-    <GameCard image="image" title="ola mundo"/>
+<Home/>
     
   );
 };
