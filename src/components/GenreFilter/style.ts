@@ -14,22 +14,23 @@ interface IFilterButtonProps {
 }
 
 export const FilterButton = styled.button<IFilterButtonProps>`
-  background-color: ${(props) => (props.active ? "#f7931B" : "#f2f2f2")};
-  color: ${(props) => (props.active ? "#ffffff" : "#000000")};
+  background-color: ${(props) => (props.active ? "#f7931B" : "#252A48")};
+  color: ${(props) => (props.active ? "#ffffff" : "#ffffff")};
   
-  border: none;
+  border: 1px solid  black;
  
  border-radius: 4px;
 
  padding: 8px 16px;
  margin-right: 8px;
+ font-weight: bold;
  
- width: 70px;
+ width: 72px;
 
 display: flex;
 justify-content: center;
 align-items: center;
-font-size: 13px;
+font-size: 12px;
 
   cursor: pointer;
 
@@ -39,4 +40,11 @@ font-size: 13px;
       font-weight: bold;
      
     `}
+
+
+    transition: background-color 0.3s, color 0.3s;
+    &:hover {
+    background-color: ${(props) => (props.active ? "#f7931B" : "#1d1f38")};
+    color: #ffffff;
+  }
 `;

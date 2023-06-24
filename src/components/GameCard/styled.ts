@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 export const CardWrapper = styled.div`
   background-color: #252A48;
-  color: #f7931B;
+  color: #ffffff;
   border-radius: 10px;
   padding: 15px;
   margin-bottom: 6px;
@@ -22,6 +22,7 @@ export const CardWrapper = styled.div`
 
 export const Title = styled.h3`
   font-size: 18px;
+  padding: 5px;
  
  
   
