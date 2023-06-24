@@ -7,6 +7,7 @@ export const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px;
+  
 `;
 
 export const ErrorMessage = styled.p`
@@ -17,3 +18,9 @@ export const ErrorMessage = styled.p`
 
 
 
+export const Header = styled.header `
+
+background-color: #1B1F38;
+color: #FFF;
+
+`;

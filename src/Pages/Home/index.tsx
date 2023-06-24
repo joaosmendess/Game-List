@@ -5,7 +5,7 @@ import GenreFilter from "../../components//GenreFilter";
 import Loader from "../../components//Loader";
 import SearchInput from "../../components/SearchInput";
 
-import {Container,ErrorMessage } from './style'
+import {Container,ErrorMessage, Header } from './style'
 const API_BASE_URL = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
 const headers = {
@@ -79,6 +79,9 @@ const Home: React.FC = () => {
       
      
      <Container>
+      <Header>
+        <h1> Game List </h1>
+      </Header>
     
     <SearchInput onSearch={handleSearch} />
     <GenreFilter games={games} onGenreSelect={handleGenreSelect} />
