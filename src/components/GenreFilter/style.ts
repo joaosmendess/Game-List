@@ -4,6 +4,17 @@ export const FilterWrapper = styled.div`
   display: flex;
 flex-direction: row;
   margin-bottom: 16px;
+
+
+  @media (max-width: 768px) {
+    display: flex;
+flex-direction: row;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+
+  }
  
  
   
@@ -34,6 +45,22 @@ font-size: 12px;
 
   cursor: pointer;
 
+
+
+  @media (max-width: 390px) {
+    width: 110px;
+  
+
+  }
+  @media (min-width: 768px) {
+    width: 230px;
+  
+  }
+
+  @media (min-width: 1200px) {
+    width: 72px;
+  
+  }
   ${(props) =>
     props.active.toString() === "true" &&
     css`
@@ -46,5 +73,7 @@ font-size: 12px;
     &:hover {
     background-color: ${(props) => (props.active ? "#f7931B" : "#1d1f38")};
     color: #ffffff;
+
   }
+
 `;
