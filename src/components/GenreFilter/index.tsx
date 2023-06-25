@@ -8,16 +8,23 @@ interface IGame {
 interface IGenreFilterProps {
   games: IGame[];
   onGenreSelect: (genre: string) => void;
+  onGenreDeselect: () => void;
 }
 
-const GenreFilter: React.FC<IGenreFilterProps> = ({ games, onGenreSelect }) => {
+const GenreFilter: React.FC<IGenreFilterProps> = ({ games, onGenreSelect, onGenreDeselect }) => {
   const genres = [...new Set(games.map((game) => game.genre))];
   const [selectedGenre, setSelectedGenre] = useState("");
 
   const handleGenreSelect = (genre: string) => {
-    setSelectedGenre(genre);
-    onGenreSelect(genre);
-  };
+    if(genre === selectedGenre) {
+      setSelectedGenre("");
+      onGenreDeselect()
+    } else {
+      setSelectedGenre(genre);
+      onGenreSelect(genre)
+    }
+   
+  }; 
 
   return (
     <FilterWrapper>

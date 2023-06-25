@@ -70,6 +70,15 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleGenreDeselect = () => {
+    if (visibleGames >= games.length) {
+      
+      return;
+    }
+
+    setFilteredGames(games.slice(0, visibleGames)); 
+  };
+
   const handleSearch = (searchText: string) => {
     if (searchText === "") {
       setFilteredGames(games.slice(0, visibleGames));
@@ -86,7 +95,7 @@ const Home: React.FC = () => {
   };
 
   const handleGoBack = () => {
-    setVisibleGames(15);
+    setVisibleGames(visibleGames);
     if (gameListRef.current) {
       gameListRef.current.scrollIntoView({ behavior: "smooth" });
     } 
@@ -115,7 +124,7 @@ const Home: React.FC = () => {
       </Header>
 
       <SearchInput onSearch={handleSearch} />
-      <GenreFilter games={games} onGenreSelect={handleGenreSelect} />
+      <GenreFilter games={games} onGenreSelect={handleGenreSelect} onGenreDeselect={handleGenreDeselect} />
 
       {loading ? (
         <Loader />
@@ -123,7 +132,7 @@ const Home: React.FC = () => {
         <ErrorMessage>
           <BsExclamationTriangle size={200} />
           {errorMessage}
-          </ErrorMessage>
+        </ErrorMessage>
       ) : (
         <div>
           <div ref={gameListRef}>
@@ -135,7 +144,7 @@ const Home: React.FC = () => {
             <ButtonContainer>
               <ViewMoreButton onClick={handleGoBack}>Voltar</ViewMoreButton>
               <BackButton onClick={handleLoadMore}>Carregar mais</BackButton>
-              </ButtonContainer>
+            </ButtonContainer>
             </>
           )}
         </div>
