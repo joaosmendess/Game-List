@@ -13,10 +13,12 @@
   <img alt="Game List Screenshot" src="./src/assets/screenshot-game-list.png" />
 </p>
 
-## 🏠 Project Overview
-In this project, I developed a website called "Game List" using the React library. The goal of this site is to display a list of games, allowing users to filter games by genre and search for games by title. 
+## 🏠 Visão Geral do Projeto
+Neste projeto, desenvolvi um site chamado "Game List" utilizando a biblioteca React. O objetivo deste site é exibir uma lista de jogos, permitindo aos usuários filtrar os jogos por gênero e realizar buscas por título. 
 
-I defined some constants and states using the React useState hook. The constant `API_BASE_URL` stores the base URL of the <h1 align="center">Bem-vindo ao Game List 👋</h1>
+Defini algumas constantes e estados utilizando o hook useState do React. A constante `API_BASE_URL` armazena a URL base da API que será utilizada para buscar os dados dos jogos. A constante `headers` contém um objeto com o cabeçalho da requisição HTTP, incluindo meu e-mail de desenvolvedor.
+
+Além disso, a página possui três funções principais: `handleGenreSelect`, `handleSearch` e `handleLoadMore`. A função `handleGenreSelect` é chamada quando um gênero é selecionado no componente GenreFilter e filtra os jogos de acordo com o gênero selecionado, atualizando o estado `filteredGames`. A função `handleSearch` é chamada quando um texto é digitado no componente SearchInput e filtra os jogos de acordo com o texto digitado, atualizando o estado `filteredGames`. A função `handleLoadMore` é chamada quando o botão "Carregar Mais" é clicado e incrementa o valor de `visibleGames`, fazendo com que mais jogos sejam exibidos. A renderização do conteúdo da página é condicional, dependendo dos estados `loading` e `errorMessage`. Se o estado `loading` for verdadeiro, o componente Loader é exibido para indicar que os dados estão sendo carregados. Se o estado `errorMessage` tiver uma mensagem de erro, essa mensagem é exibida utilizando o componente ErrorMessage; caso contrário, a lista de jogos é exibida utilizando o componente GameList. <h1 align="center">Bem-vindo ao Game List 👋</h1>
 <p align="center">
   <img alt="Versão" src="https://img.shields.io/badge/versão-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/joaosmendess/Game-List#readme" target="_blank">
@@ -29,15 +31,10 @@ I defined some constants and states using the React useState hook. The constant 
 
 <p align="center">
   <img alt="Captura de tela do Game List" src="./src/assests/WhatsApp%20Image%202023-06-25%20at%2017.32.04.jpeg" />
-  <img alt="Captura de tela do Game List" src="./src/assests/screenshot-game-list.png" />
+  <img alt="Captura de tela do Game List" src="./src/assests/screenshot-game-list.png" size ={20} />
 </p>
 
-## 🏠 Visão Geral do Projeto
-Neste projeto, desenvolvi um site chamado "Game List" utilizando a biblioteca React. O objetivo deste site é exibir uma lista de jogos, permitindo aos usuários filtrar os jogos por gênero e realizar buscas por título. 
 
-Defini algumas constantes e estados utilizando o hook useState do React. A constante `API_BASE_URL` armazena a URL base da API que será utilizada para buscar os dados dos jogos. A constante `headers` contém um objeto com o cabeçalho da requisição HTTP, incluindo meu e-mail de desenvolvedor.
-
-Além disso, a página possui três funções principais: `handleGenreSelect`, `handleSearch` e `handleLoadMore`. A função `handleGenreSelect` é chamada quando um gênero é selecionado no componente GenreFilter e filtra os jogos de acordo com o gênero selecionado, atualizando o estado `filteredGames`. A função `handleSearch` é chamada quando um texto é digitado no componente SearchInput e filtra os jogos de acordo com o texto digitado, atualizando o estado `filteredGames`. A função `handleLoadMore` é chamada quando o botão "Carregar Mais" é clicado e incrementa o valor de `visibleGames`, fazendo com que mais jogos sejam exibidos. A renderização do conteúdo da página é condicional, dependendo dos estados `loading` e `errorMessage`. Se o estado `loading` for verdadeiro, o componente Loader é exibido para indicar que os dados estão sendo carregados. Se o estado `errorMessage` tiver uma mensagem de erro, essa mensagem é exibida utilizando o componente ErrorMessage; caso contrário, a lista de jogos é exibida utilizando o componente GameList.
 
 # Documentação da API Game List
 
