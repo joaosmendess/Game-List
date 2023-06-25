@@ -5,7 +5,7 @@ import GenreFilter from "../../components//GenreFilter";
 import Loader from "../../components//Loader";
 import SearchInput from "../../components/SearchInput";
 
-import {Container,ErrorMessage, Header } from './style'
+import {Container,ErrorMessage, Header,Logo,Nav,NavLink } from './style'
 const API_BASE_URL = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
 const headers = {
@@ -80,7 +80,13 @@ const Home: React.FC = () => {
      
      <Container>
       <Header>
-        <h1> Game List </h1>
+        <Logo> Meu site</Logo>
+        <Nav>
+          <NavLink href= "#">ola </NavLink>
+          <NavLink href= "#">oi</NavLink>
+          
+
+        </Nav>
       </Header>
     
     <SearchInput onSearch={handleSearch} />

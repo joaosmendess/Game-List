@@ -15,7 +15,7 @@ interface IFilterButtonProps {
 
 export const FilterButton = styled.button<IFilterButtonProps>`
   background-color: ${(props) => (props.active ? "#f7931B" : "#252A48")};
-  color: ${(props) => (props.active ? "#ffffff" : "#ffffff")};
+  color: #ffffff;
   
   border: 1px solid  black;
  
