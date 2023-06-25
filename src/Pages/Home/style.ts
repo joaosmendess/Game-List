@@ -29,7 +29,7 @@ export const Header = styled.header`
 
 export const Logo = styled.h1`
   font-size: 24px;
-  font-weight: bold;
+  font-weight: bolder;
 `;
 
 export const Nav = styled.nav`
@@ -37,13 +37,15 @@ export const Nav = styled.nav`
   align-items: center;
 
   & > * {
-    margin-left: 16px;
+    margin-left: 8px;
   }
 `;
+
 export const NavLink = styled.a`
-  color: #FFF;
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
+
 
   &:hover {
     text-decoration: underline;
