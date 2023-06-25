@@ -67,19 +67,3 @@ Exemplo de resposta de erro:
 
 
 
-
-* Github: [@]https://github.com/joaosmendess 
-* LinkedIn: [@joaosmendess](https://linkedin.com/in/joaosmendess)
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://game-list-tau.vercel.app/). 
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-<a href="https://www.patreon.com/João Mendes">
-  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
-
