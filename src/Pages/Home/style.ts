@@ -1,6 +1,15 @@
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 
 
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 
 export const Container = styled.div`
@@ -10,9 +19,21 @@ export const Container = styled.div`
   
 `;
 
-export const ErrorMessage = styled.p`
+export const ErrorMessage = styled.div`
+ display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: red;
-  font-weight: bold;
+  font-weight: lighter;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-top: 10px;
+  animation: ${fadeIn} 0.5s ease;
+
+
+
+  
 `;
 
 
@@ -63,7 +84,7 @@ export const ButtonContainer = styled.div`
 export const ViewMoreButton = styled.button`
   margin-top: 16px;
   padding: 8px 16px;
-  background-color: #1B1F38;
+  background-color: #444;
   color: #FFF;
   font-weight: bold;
   border: none;
@@ -71,7 +92,7 @@ export const ViewMoreButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #444;
+    background-color: #f7931B;
   }
 
 
@@ -80,7 +101,7 @@ export const ViewMoreButton = styled.button`
 export const BackButton = styled.button`
 margin-top: 16px;
   padding: 8px 16px;
-  background-color: #1B1F38;
+  background-color: #444;
   color: #FFF;
   font-weight: bold;
   border: none;
@@ -88,7 +109,7 @@ margin-top: 16px;
   cursor: pointer;
 
   &:hover {
-    background-color: #444;
+    background-color: #f7931B;
   }
 
 `;

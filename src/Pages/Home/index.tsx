@@ -6,7 +6,7 @@ import GenreFilter from "../../components/GenreFilter";
 import Loader from "../../components/Loader";
 import SearchInput from "../../components/SearchInput";
 
-import { BsGithub, BsLinkedin } from "react-icons/bs";
+import { BsGithub, BsLinkedin, BsExclamationTriangle } from "react-icons/bs";
 
 import { Container, ErrorMessage, Header, Logo, Nav, NavLink, ViewMoreButton, BackButton, ButtonContainer  } from "./style";
 
@@ -28,7 +28,7 @@ const Home: React.FC = () => {
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [visibleGames, setVisibleGames] = useState(15);
+  const [visibleGames, setVisibleGames] = useState(12);
   const gameListRef = useRef<HTMLDivElement>(null);
 
   const fetchData = async () => {
@@ -120,11 +120,15 @@ const Home: React.FC = () => {
       {loading ? (
         <Loader />
       ) : errorMessage ? (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <ErrorMessage>
+          <BsExclamationTriangle size={200} />
+          {errorMessage}
+          </ErrorMessage>
       ) : (
         <div>
           <div ref={gameListRef}>
             <GameList games={filteredGames} />
+            
           </div>
           {filteredGames.length < games.length && (
             <>
