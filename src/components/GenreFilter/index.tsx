@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FilterWrapper, FilterButton } from './style';
+import { FilterWrapper, FilterButton } from "./style";
 
 interface IGame {
   genre: string;
@@ -11,32 +11,43 @@ interface IGenreFilterProps {
   onGenreDeselect: () => void;
 }
 
-const GenreFilter: React.FC<IGenreFilterProps> = ({ games, onGenreSelect, onGenreDeselect }) => {
-  const genres = [...new Set(games.map((game) => game.genre))];
-  const [selectedGenre, setSelectedGenre] = useState("");
+const GenreFilter: React.FC<IGenreFilterProps> = ({
+  games,
+  onGenreSelect,
+  onGenreDeselect
+}) => {
+  const genres = [...new Set(["All", ...games.map((game) => game.genre)])];
+
+  const [selectedGenre, setSelectedGenre] = useState("All");
 
   const handleGenreSelect = (genre: string) => {
-    if(genre === selectedGenre) {
+    if (genre === selectedGenre) {
       setSelectedGenre("");
-      onGenreDeselect()
+      onGenreDeselect();
+    } else if (genre === "All") {
+      setSelectedGenre("All");
+      onGenreSelect("");
     } else {
       setSelectedGenre(genre);
-      onGenreSelect(genre)
+      onGenreSelect(genre);
     }
-   
-  }; 
+  };
+
+  // Verificar se há mais de um gênero disponível, excluindo o gênero "All"
+  const hasMultipleGenres = genres.length > 1;
 
   return (
     <FilterWrapper>
-      {genres.map((genre, index) => (
-        <FilterButton
-          key={index}
-          active={genre === selectedGenre}
-          onClick={() => handleGenreSelect(genre)}
-        >
-          {genre}
-        </FilterButton>
-      ))}
+      {hasMultipleGenres &&
+        genres.map((genre, index) => (
+          <FilterButton
+            key={index}
+            active={genre === selectedGenre}
+            onClick={() => handleGenreSelect(genre)}
+          >
+            {genre}
+          </FilterButton>
+        ))}
     </FilterWrapper>
   );
 };

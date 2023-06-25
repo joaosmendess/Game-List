@@ -10,6 +10,7 @@ interface GameCardProps {
 
 const GameCard: React.FC<GameCardProps> = ({ title, image }) => {
     return (
+      
       <CardWrapper>
         <Image src={image} alt={title} />
         <Title>{title}</Title>

@@ -21,6 +21,7 @@ interface Game {
   title: string;
   thumbnail: string;
   genre: string;
+
 }
 
 const Home: React.FC = () => {
@@ -101,6 +102,9 @@ const Home: React.FC = () => {
     } 
   };
 
+
+  
+
   return (
     <Container>
       <Header>
@@ -136,7 +140,7 @@ const Home: React.FC = () => {
       ) : (
         <div>
           <div ref={gameListRef}>
-            <GameList games={filteredGames} />
+            <GameList games={filteredGames}  />
             
           </div>
           {filteredGames.length < games.length && (
