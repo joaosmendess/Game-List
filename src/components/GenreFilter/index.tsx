@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FilterWrapper, FilterButton } from './style';
-import { StyleSheetManager } from "styled-components";
 
 interface IGame {
   genre: string;
@@ -21,19 +20,17 @@ const GenreFilter: React.FC<IGenreFilterProps> = ({ games, onGenreSelect }) => {
   };
 
   return (
-    <StyleSheetManager shouldForwardProp={(prop) => prop !== "active"}>
-      <FilterWrapper>
-        {genres.map((genre, index) => (
-          <FilterButton
-            key={index}
-            active={genre === selectedGenre}
-            onClick={() => handleGenreSelect(genre)}
-          >
-            {genre}
-          </FilterButton>
-        ))}
-      </FilterWrapper>
-    </StyleSheetManager>
+    <FilterWrapper>
+      {genres.map((genre, index) => (
+        <FilterButton
+          key={index}
+          active={genre === selectedGenre}
+          onClick={() => handleGenreSelect(genre)}
+        >
+          {genre}
+        </FilterButton>
+      ))}
+    </FilterWrapper>
   );
 };
 
