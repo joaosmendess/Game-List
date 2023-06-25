@@ -28,7 +28,6 @@ const Home: React.FC = () => {
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  
 
   const fetchData = async () => {
     try {
@@ -53,6 +52,17 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+
+  useEffect(() => {
+    // Limitar a lista de jogos a 16
+    const limitGames = () => {
+      const limited = games.slice(0, 16);
+      setFilteredGames(limited);
+    };
+
+    limitGames();
+  }, [games]);
 
   const handleGenreSelect = (genre: string) => {
     if (genre === "") {
@@ -105,6 +115,7 @@ const Home: React.FC = () => {
       ) : (
         <GameList games={filteredGames} />
       )}
+     
     </Container>
   );
 };
