@@ -22,7 +22,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, image, game_url, genre }) =>
     return () => clearTimeout(timeout);
   }, [genre]);
 
-  return (
+  return ( 
     <CardWrapper genreChange={genreChange}>
       <Link href={game_url} target="_blank" rel="noopener noreferrer">
         <Image src={image} alt={title} />

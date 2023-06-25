@@ -13,6 +13,56 @@
 
 
 
+# Documentação da API Game List
+
+## Visão geral
+Esta API fornece dados para o site "Game List". Ela permite aos usuários recuperar uma lista de jogos, filtrar jogos por gênero e pesquisar jogos por título.
+
+## URL base
+
+https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/
+
+## Headers da requisição
+O seguinte header deve ser incluído em suas requisições à API:
+
+```plaintext
+dev-email-address: [seu-endereco-de-email]
+
+Endpoints
+GET /api/data/
+Descrição
+Recupera uma lista de jogos.
+
+Parâmetros
+Nenhum
+
+Exemplo de requisição: 
+GET https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/
+ Exemplo de resposta:
+ [
+  {
+    "title": "Jogo 1",
+    "thumbnail": "https://exemplo.com/jogo1.jpg",
+    "genre": "Ação",
+    "game_url": "https://exemplo.com/jogo1"
+  },
+  {
+    "title": "Jogo 2",
+    "thumbnail": "https://exemplo.com/jogo2.jpg",
+    "genre": "RPG",
+    "game_url": "https://exemplo.com/jogo2"
+  },
+  ...
+]
+
+Tratamento de erros
+Se ocorrer um erro, a API responderá com um código de status HTTP apropriado e uma mensagem de erro no corpo da resposta.
+
+Exemplo de resposta de erro:
+{
+  "error": "Internal Server Error",
+  "message": "O servidor falhou em responder, tente novamente mais tarde."
+}
 
 
 
