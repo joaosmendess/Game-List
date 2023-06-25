@@ -22,7 +22,6 @@ interface Game {
   thumbnail: string;
   genre: string;
   game_url: string;
-
 }
 
 const Home: React.FC = () => {
@@ -31,6 +30,8 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [visibleGames, setVisibleGames] = useState(12);
+  const [selectedGenre, setSelectedGenre] = useState("");
+
   const gameListRef = useRef<HTMLDivElement>(null);
 
   const fetchData = async () => {
@@ -58,27 +59,23 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Limitar a lista de jogos iniciais
-    const limited = games.slice(0, visibleGames);
-    setFilteredGames(limited);
-  }, [games, visibleGames]);
-
-  const handleGenreSelect = (genre: string) => {
-    if (genre === "") {
+    // Filtrar jogos pelo gênero selecionado
+    if (selectedGenre === "") {
       setFilteredGames(games.slice(0, visibleGames));
     } else {
-      const filtered = games.filter((game) => game.genre === genre);
+      const filtered = games.filter((game) => game.genre === selectedGenre);
       setFilteredGames(filtered.slice(0, visibleGames));
     }
+  }, [games, selectedGenre, visibleGames]);
+
+  const handleGenreSelect = (genre: string) => {
+    setSelectedGenre(genre);
+    setVisibleGames(12); // Redefinir o número de jogos visíveis ao selecionar um gênero
   };
 
   const handleGenreDeselect = () => {
-    if (visibleGames >= games.length) {
-      
-      return;
-    }
-
-    setFilteredGames(games.slice(0, visibleGames)); 
+    setSelectedGenre("");
+    setVisibleGames(12); // Redefinir o número de jogos visíveis ao desmarcar o gênero
   };
 
   const handleSearch = (searchText: string) => {
@@ -97,14 +94,11 @@ const Home: React.FC = () => {
   };
 
   const handleGoBack = () => {
-    setVisibleGames(visibleGames);
+    setVisibleGames(12);
     if (gameListRef.current) {
       gameListRef.current.scrollIntoView({ behavior: "smooth" });
-    } 
+    }
   };
-
-
-
 
   return (
     <Container>
@@ -129,7 +123,11 @@ const Home: React.FC = () => {
       </Header>
 
       <SearchInput onSearch={handleSearch} />
-      <GenreFilter games={games} onGenreSelect={handleGenreSelect} onGenreDeselect={handleGenreDeselect} />
+      <GenreFilter
+        games={games}
+        onGenreSelect={handleGenreSelect}
+        onGenreDeselect={handleGenreDeselect}
+      />
 
       {loading ? (
         <Loader />
@@ -141,15 +139,14 @@ const Home: React.FC = () => {
       ) : (
         <div>
           <div ref={gameListRef}>
-            <GameList games={filteredGames}  />
-            
+            <GameList games={filteredGames} />
           </div>
           {filteredGames.length < games.length && (
             <>
-            <ButtonContainer>
-              <ViewMoreButton onClick={handleGoBack}>Voltar</ViewMoreButton>
-              <BackButton onClick={handleLoadMore}>Carregar mais</BackButton>
-            </ButtonContainer>
+              <ButtonContainer>
+                <ViewMoreButton onClick={handleGoBack}>Voltar</ViewMoreButton>
+                <BackButton onClick={handleLoadMore}>Carregar mais</BackButton>
+              </ButtonContainer>
             </>
           )}
         </div>
