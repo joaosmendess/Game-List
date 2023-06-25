@@ -24,4 +24,4 @@ const SearchInput: React.FC<SearchInputProps> = ({ onSearch }) => {
     );
   };
   
-  export default SearchInput;
+  export default SearchInput; 

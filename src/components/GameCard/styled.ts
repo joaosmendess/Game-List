@@ -32,7 +32,7 @@ export const CardWrapper = styled.div<{ genreChange: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 380px;
+  max-width: 400px;
 
   ${({ genreChange }) =>
     genreChange &&

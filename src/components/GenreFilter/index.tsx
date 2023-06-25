@@ -24,7 +24,7 @@ const GenreFilter: React.FC<IGenreFilterProps> = ({
     if (genre === selectedGenre) {
       setSelectedGenre("");
       onGenreDeselect();
-    } else if (genre === "All") {
+    } else if (genre === "All") { 
       setSelectedGenre("All");
       onGenreSelect("");
     } else {

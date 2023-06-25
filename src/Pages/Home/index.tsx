@@ -85,7 +85,7 @@ const Home: React.FC = () => {
       const filtered = games.filter((game) =>
         game.title.toLowerCase().includes(searchText.toLowerCase())
       );
-      setFilteredGames(filtered.slice(0, visibleGames));
+      setFilteredGames(filtered.slice(0, visibleGames)); 
     }
   };
 

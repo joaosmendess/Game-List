@@ -49,20 +49,22 @@ font-size: 12px;
   cursor: pointer;
 
 
+  
+  
 
-  @media (max-width: 414px) {
-    width: 110px;
+  @media (min-width: 416px ) {
+    width: 130px;
   
 
   }
-  @media (min-width: 768px) {
-    width: 230px;
+  @media (min-width: 765px) {
+    width: 145px;
     
   
   }
 
   @media (min-width: 1200px) {
-    width: 75px;
+    width: 70px;
   
   }
   ${(props) =>
