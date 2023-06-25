@@ -69,6 +69,7 @@ Exemplo de resposta de erro:
 
 
 
+<<<<<<< HEAD
 * Github: [@]https://github.com/joaosmendess 
 * LinkedIn: [@joaosmendess](https://linkedin.com/in/joaosmendess)
 
@@ -84,3 +85,5 @@ Give a ⭐️ if this project helped you!
   <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
 </a>
 
+=======
+>>>>>>> 0700ed98072e93cfec6140b56900e8735cb7bd9e
