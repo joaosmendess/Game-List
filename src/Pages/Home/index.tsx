@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import GameList from "../../components/GameList";
-import GenreFilter from "../../components//GenreFilter";
-import Loader from "../../components//Loader";
+import GenreFilter from "../../components/GenreFilter";
+import Loader from "../../components/Loader";
 import SearchInput from "../../components/SearchInput";
 
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 
 import { Container, ErrorMessage, Header, Logo, Nav, NavLink } from "./style";
+
 const API_BASE_URL =
   "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
@@ -27,8 +28,7 @@ const Home: React.FC = () => {
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [searchText, setSearchText] = useState("");
+  
 
   const fetchData = async () => {
     try {
@@ -55,7 +55,6 @@ const Home: React.FC = () => {
   }, []);
 
   const handleGenreSelect = (genre: string) => {
-    setSelectedGenre(genre);
     if (genre === "") {
       setFilteredGames(games);
     } else {
@@ -65,7 +64,6 @@ const Home: React.FC = () => {
   };
 
   const handleSearch = (searchText: string) => {
-    setSearchText(searchText);
     if (searchText === "") {
       setFilteredGames(games);
     } else {
@@ -81,12 +79,20 @@ const Home: React.FC = () => {
       <Header>
         <Logo> GAME LIST</Logo>
         <Nav>
-        <NavLink href="https://github.com/joaosmendess" target="_blank"  rel="noopener noreferrer">
-          <BsGithub size={28} />
-        </NavLink>
-        <NavLink href="https://www.linkedin.com/in/joaosmendess/" target="_blank"  rel="noopener noreferrer">
-          <BsLinkedin  size={28}/>
-        </NavLink>
+          <NavLink
+            href="https://github.com/joaosmendess"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BsGithub size={28} />
+          </NavLink>
+          <NavLink
+            href="https://www.linkedin.com/in/joaosmendess/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BsLinkedin size={28} />
+          </NavLink>
         </Nav>
       </Header>
 

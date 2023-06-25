@@ -12,6 +12,8 @@ flex-direction: row;
   margin-bottom: 16px;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 3px;
+  
   
 
   }
@@ -34,6 +36,7 @@ export const FilterButton = styled.button<IFilterButtonProps>`
 
  padding: 8px 16px;
  margin-right: 8px;
+ margin: 2px;
  font-weight: bold;
  
  width: 72px;
@@ -54,11 +57,12 @@ font-size: 12px;
   }
   @media (min-width: 768px) {
     width: 230px;
+    
   
   }
 
   @media (min-width: 1200px) {
-    width: 72px;
+    width: 75px;
   
   }
   ${(props) =>
