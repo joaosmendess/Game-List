@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 import GameList from "../../components/GameList";
@@ -8,7 +8,7 @@ import SearchInput from "../../components/SearchInput";
 
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 
-import { Container, ErrorMessage, Header, Logo, Nav, NavLink } from "./style";
+import { Container, ErrorMessage, Header, Logo, Nav, NavLink, ViewMoreButton, BackButton, ButtonContainer  } from "./style";
 
 const API_BASE_URL =
   "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
@@ -28,6 +28,8 @@ const Home: React.FC = () => {
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [visibleGames, setVisibleGames] = useState(15);
+  const gameListRef = useRef<HTMLDivElement>(null);
 
   const fetchData = async () => {
     try {
@@ -53,34 +55,40 @@ const Home: React.FC = () => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
-    // Limitar a lista de jogos a 16
-    const limitGames = () => {
-      const limited = games.slice(0, 16);
-      setFilteredGames(limited);
-    };
-
-    limitGames();
-  }, [games]);
+    // Limitar a lista de jogos iniciais
+    const limited = games.slice(0, visibleGames);
+    setFilteredGames(limited);
+  }, [games, visibleGames]);
 
   const handleGenreSelect = (genre: string) => {
     if (genre === "") {
-      setFilteredGames(games);
+      setFilteredGames(games.slice(0, visibleGames));
     } else {
       const filtered = games.filter((game) => game.genre === genre);
-      setFilteredGames(filtered);
+      setFilteredGames(filtered.slice(0, visibleGames));
     }
   };
 
   const handleSearch = (searchText: string) => {
     if (searchText === "") {
-      setFilteredGames(games);
+      setFilteredGames(games.slice(0, visibleGames));
     } else {
       const filtered = games.filter((game) =>
         game.title.toLowerCase().includes(searchText.toLowerCase())
       );
-      setFilteredGames(filtered);
+      setFilteredGames(filtered.slice(0, visibleGames));
+    }
+  };
+
+  const handleLoadMore = () => {
+    setVisibleGames((prevVisibleGames) => prevVisibleGames + 15);
+  };
+
+  const handleGoBack = () => {
+    setVisibleGames(15);
+    if (gameListRef.current) {
+      gameListRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -108,14 +116,26 @@ const Home: React.FC = () => {
 
       <SearchInput onSearch={handleSearch} />
       <GenreFilter games={games} onGenreSelect={handleGenreSelect} />
+
       {loading ? (
         <Loader />
       ) : errorMessage ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       ) : (
-        <GameList games={filteredGames} />
+        <div>
+          <div ref={gameListRef}>
+            <GameList games={filteredGames} />
+          </div>
+          {filteredGames.length < games.length && (
+            <>
+            <ButtonContainer>
+              <ViewMoreButton onClick={handleGoBack}>Voltar</ViewMoreButton>
+              <BackButton onClick={handleLoadMore}>Carregar mais</BackButton>
+              </ButtonContainer>
+            </>
+          )}
+        </div>
       )}
-     
     </Container>
   );
 };

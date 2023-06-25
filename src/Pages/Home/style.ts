@@ -51,3 +51,44 @@ export const NavLink = styled.a`
     text-decoration: underline;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+  justify-content: space-between;
+`;
+
+
+export const ViewMoreButton = styled.button`
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #1B1F38;
+  color: #FFF;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #444;
+  }
+
+
+`;
+
+export const BackButton = styled.button`
+margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #1B1F38;
+  color: #FFF;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #444;
+  }
+
+`;
