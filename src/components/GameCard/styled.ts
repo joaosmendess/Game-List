@@ -11,13 +11,19 @@ export const CardWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 350px;
+  @media (width: 414px) {
+    margin-left: 18px;
+  
 
+  }
   transition: transform 0.3s;
 
 &:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+
 `;
 
 export const Title = styled.h3`

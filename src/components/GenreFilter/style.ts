@@ -50,7 +50,7 @@ font-size: 12px;
 
 
 
-  @media (max-width: 390px) {
+  @media (max-width: 414px) {
     width: 110px;
   
 
