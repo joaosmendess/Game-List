@@ -89,7 +89,7 @@ const Home: React.FC = () => {
     setVisibleGames(15);
     if (gameListRef.current) {
       gameListRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    } 
   };
 
   return (
