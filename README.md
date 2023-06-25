@@ -30,7 +30,7 @@ Além disso, a página possui três funções principais: `handleGenreSelect`, `
 </p>
 
 <p align="center">
-  <img alt="Captura de tela do Game List" src="./src/assests/WhatsApp%20Image%202023-06-25%20at%2017.32.04.jpeg" />
+  <img alt="Captura de tela do Game List" src="./src/assests/WhatsApp%20Image%202023-06-25%20at%2017.32.04.jpeg"  width= "250px"/>
 
 </p>
 
