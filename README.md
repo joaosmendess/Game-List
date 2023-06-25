@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img alt="Game List Screenshot" src="./src/assets/screenshot-game-list.png" />
+  <img alt="Game List Screenshot" src="./src/assests/screenshot-game-list.png" />
 </p>
 
 ## 🏠 Visão Geral do Projeto
@@ -31,7 +31,7 @@ Além disso, a página possui três funções principais: `handleGenreSelect`, `
 
 <p align="center">
   <img alt="Captura de tela do Game List" src="./src/assests/WhatsApp%20Image%202023-06-25%20at%2017.32.04.jpeg" />
-  <img alt="Captura de tela do Game List" src="./src/assests/screenshot-game-list.png" size ={20} />
+
 </p>
 
 
