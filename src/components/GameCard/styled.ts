@@ -33,7 +33,7 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 350px;
+  max-width: 380px;
 
   animation: ${fadeInAnimation} 0.9s ease-in-out;
 
@@ -41,8 +41,9 @@ export const CardWrapper = styled.div`
 
 
 
-  @media (width: 414px) {
-    margin-left: 18px;
+  @media (max-width: 414px) {
+  
+    animation: ${fadeInAnimation} 0.5s ease-in-out ;
   
 
   }
@@ -62,7 +63,7 @@ export const Title = styled.h3`
 export const Image = styled.img`
    width: 100%;
   max-height: 300px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
