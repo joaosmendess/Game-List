@@ -4,8 +4,11 @@ import { ListWrapper } from "./style";
 
 interface Game {
   title: string;
-  thumbnail: string; // Alteração: Alterar "image" para "thumbnail"
+  thumbnail: string; 
+  game_url: string;
+  genre: string; 
 }
+
 
 interface GameListProps {
   games: Game[];
@@ -15,10 +18,10 @@ const GameList: React.FC<GameListProps> = ({ games }) => {
   return (
     <ListWrapper>
       {games.map((game, index) => (
-        <GameCard key={index} title={game.title} image={game.thumbnail} /> // Alteração: Passar "thumbnail" em vez de "image"
+        <GameCard key={index} title={game.title} image={game.thumbnail} game_url = {game.game_url} genre={game.genre}/> 
       ))}
     </ListWrapper>
   );
 };
 
-export default GameList;
+export  default GameList;

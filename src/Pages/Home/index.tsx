@@ -21,6 +21,7 @@ interface Game {
   title: string;
   thumbnail: string;
   genre: string;
+  game_url: string;
 
 }
 
@@ -103,7 +104,7 @@ const Home: React.FC = () => {
   };
 
 
-  
+
 
   return (
     <Container>

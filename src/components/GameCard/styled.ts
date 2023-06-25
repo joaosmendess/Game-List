@@ -1,4 +1,4 @@
-import styled, {keyframes} from 'styled-components'
+import styled, { keyframes, css } from "styled-components";
 
 const hoverAnimation = keyframes`
   0% {
@@ -13,7 +13,8 @@ const hoverAnimation = keyframes`
 `;
 
 
-const fadeInAnimation = keyframes`
+
+const genreChangeAnimation = keyframes`
   0% {
     opacity: 0;
     transform: translateX(-20px);
@@ -24,10 +25,8 @@ const fadeInAnimation = keyframes`
   }
 `;
 
-export const CardWrapper = styled.div`
-  
+export const CardWrapper = styled.div<{ genreChange: boolean }>`
   color: #ffffff;
- 
   padding: 15px;
   margin-bottom: 6px;
   display: flex;
@@ -35,39 +34,31 @@ export const CardWrapper = styled.div`
   align-items: center;
   max-width: 380px;
 
-  animation: ${fadeInAnimation} 0.9s ease-in-out;
+  ${({ genreChange }) =>
+    genreChange &&
+    css`
+      animation: ${genreChangeAnimation} 1s;
+    `};
 
   
-
-
-
-  @media (max-width: 414px) {
-  
-    animation: ${fadeInAnimation} 0.5s ease-in-out ;
-  
-
-  }
-
-
-
 `;
 
 export const Title = styled.h3`
   font-size: 18px;
   padding: 5px;
- 
- 
-  
 `;
 
 export const Image = styled.img`
-   width: 100%;
+  width: 100%;
   max-height: 300px;
   object-fit: contain;
   border-radius: 4px;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+
   &:hover {
     animation: ${hoverAnimation} 1s ease-in-out infinite;
   }
 `;
+
+export const Link = styled.a``;
