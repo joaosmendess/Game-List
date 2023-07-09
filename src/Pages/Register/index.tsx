@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../components/Input";
 import { BsController } from "react-icons/bs";
 import {
@@ -8,15 +8,46 @@ import {
   Button,
   Logo,
   InputContainer,
-  StyleLink
+  StyleLink,
 } from "./style";
 import { Link } from "react-router-dom";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../../services/firebaseConfig";
+import { UserCredential, sendEmailVerification } from "firebase/auth";
 
-const Register: React.FC = () => {
-  const handleRegister = (e: React.FormEvent) => {
+interface IRegisterProps {
+  UserEmail: string;
+  UserPassword: string;
+}
+
+const Register: React.FC<IRegisterProps> = ({
+  UserEmail,
+  UserPassword,
+}) => {
+  const [email, setEmail] = useState(UserEmail);
+  const [password, setPassword] = useState(UserPassword);
+
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Implemente aqui a lógica de Register desejada
-    console.log("Register realizado com sucesso!");
+
+    try {
+      const userCredential: UserCredential | undefined = await createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      if (userCredential?.user) {
+        // Registro realizado com sucesso
+        await sendEmailVerification(userCredential.user);
+        console.log("E-mail de confirmação enviado!");
+        console.log("Registro realizado com sucesso!");
+      }
+    } catch (error) {
+      // Tratar erros de registro
+      console.error(error);
+    }
   };
 
   return (
@@ -26,31 +57,40 @@ const Register: React.FC = () => {
         <h2>GameList</h2>
       </Logo>
 
-      <Form onSubmit={handleRegister}>
+      <Form>
         <FormTitle>Cadastrar</FormTitle>
         <InputContainer>
           <Input type="text" required placeholder="Nome" />
         </InputContainer>
         <InputContainer>
-          <Input type="email" required placeholder="E-mail" />
+          <Input
+            type="email"
+            required
+            placeholder="E-mail"
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </InputContainer>
+
         <InputContainer>
-          <Input type="password" required placeholder="Senha" />
+         
         </InputContainer>
+
         <InputContainer>
-          <Input type="date" required placeholder="Data de Nascimento" />
+          <Input
+            type="password"
+            required
+            placeholder="Senha"
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </InputContainer>
-<Link to ="/login"> 
 
-<StyleLink>
+        <Link to="/login">
+          <StyleLink>Já possui uma conta?</StyleLink>
+        </Link>
 
-Já possui uma conta?
-</StyleLink>
-</Link>
-
-
-       
-        <Button type="submit">Cadastrar</Button>
+        <Button type="submit" onClick={handleRegister}>
+          Cadastrar
+        </Button>
       </Form>
     </Container>
   );

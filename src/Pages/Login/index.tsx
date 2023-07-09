@@ -2,6 +2,8 @@ import React from "react";
 import Input from "../../components/Input";
 import { BsController } from "react-icons/bs";
 import { Link } from "react-router-dom";
+
+
 import {
   Container,
   Form,
@@ -11,8 +13,14 @@ import {
   StyleLink,
 } from "./style";
 
+
+
+
+
 const Login: React.FC = () => {
- 
+
+  
+
   return (
     <Container>
       <Logo>
@@ -22,14 +30,14 @@ const Login: React.FC = () => {
 
       <Form >
         <FormTitle>Entrar</FormTitle>
-        <Input type="email" required placeholder="e-mail" />
-        <Input placeholder="senha" type="password" required />
+        <Input type="email" required placeholder="e-mail"/>
+        <Input placeholder="senha" type="password" required  />
 
         <Link to="/register" >
           <StyleLink>Ainda não tem uma conta?</StyleLink>
         </Link>
 
-        <Button type="submit">Acessar</Button>
+        <Button type="submit" >Acessar</Button>
       </Form>
     </Container>
   );
