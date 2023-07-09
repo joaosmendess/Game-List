@@ -1,13 +1,15 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
 import GlobalStyles from './styles/GlobalStyles';
-import Home from './Pages/Home';
-//import SignIn from './Pages/SignIn';
 
 const App: React.FC = () => {
   return (
     <>
       <GlobalStyles />
-      <Home />
+      <Routes>
+        <Route path="/*" element={<AppRoutes />} />
+      </Routes>
     </>
   );
 };
