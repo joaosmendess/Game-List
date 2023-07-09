@@ -16,7 +16,7 @@ import { auth } from "../../services/firebaseConfig";
 import { UserCredential, sendEmailVerification } from "firebase/auth";
 
 interface IRegisterProps {
-  UserEmail: string;
+  UserEmail: string; 
   UserPassword: string;
 }
 
