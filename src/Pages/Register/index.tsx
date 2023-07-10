@@ -13,10 +13,10 @@ import {
 import { Link } from "react-router-dom";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../services/firebaseConfig";
-import { UserCredential, sendEmailVerification } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
 
 interface IRegisterProps {
-  UserEmail: string; 
+  UserEmail: string;
   UserPassword: string;
 }
 
@@ -34,13 +34,11 @@ const Register: React.FC<IRegisterProps> = ({
     e.preventDefault();
 
     try {
-      const userCredential: UserCredential | undefined = await createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      if (userCredential?.user) {
+       createUserWithEmailAndPassword(email, password);
+      const user = auth.currentUser;
+      if (user) {
         // Registro realizado com sucesso
-        await sendEmailVerification(userCredential.user);
+        await sendEmailVerification(user);
         console.log("E-mail de confirmação enviado!");
         console.log("Registro realizado com sucesso!");
       }
@@ -72,7 +70,7 @@ const Register: React.FC<IRegisterProps> = ({
         </InputContainer>
 
         <InputContainer>
-         
+          {/* Coloque aqui o código correspondente ao campo adicional */}
         </InputContainer>
 
         <InputContainer>
