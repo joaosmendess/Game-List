@@ -10,42 +10,41 @@ import {
   InputContainer,
   StyleLink,
 } from "./style";
-import { Link } from "react-router-dom";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebaseConfig";
-import { sendEmailVerification } from "firebase/auth";
-
+import {
+  sendEmailVerification,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+// https://firebase.google.com/docs/auth/web/password-auth?hl=pt-br#web-modular-api
 interface IRegisterProps {
   UserEmail: string;
   UserPassword: string;
 }
 
-const Register: React.FC<IRegisterProps> = ({
-  UserEmail,
-  UserPassword,
-}) => {
+const Register: React.FC<IRegisterProps> = ({ UserEmail, UserPassword }) => {
   const [email, setEmail] = useState(UserEmail);
   const [password, setPassword] = useState(UserPassword);
-
-  const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth);
+  const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-       createUserWithEmailAndPassword(email, password);
-      const user = auth.currentUser;
-      if (user) {
-        // Registro realizado com sucesso
-        await sendEmailVerification(user);
-        console.log("E-mail de confirmação enviado!");
-        console.log("Registro realizado com sucesso!");
-      }
-    } catch (error) {
-      // Tratar erros de registro
-      console.error(error);
-    }
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        if (userCredential && user) {
+          // Registro realizado com sucesso
+          await sendEmailVerification(userCredential.user);
+          console.log("E-mail de confirmação enviado!");
+          console.log("Registro realizado com sucesso!");
+          navigate("/login"); // Redirecionar para a página de login
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
 
   return (
