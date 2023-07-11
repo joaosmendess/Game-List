@@ -44,8 +44,8 @@ const Register: React.FC<IRegisterProps> = ({ UserEmail, UserPassword }) => {
         }
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        console.log(error);
+        
       });
   };
 
