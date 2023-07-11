@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { collection, addDoc, deleteDoc, getFirestore, doc, CollectionReference, DocumentData } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, getFirestore, doc, CollectionReference, DocumentData,  } from "firebase/firestore";
 import { BsGithub, BsLinkedin, BsExclamationTriangle } from "react-icons/bs";
 import { Container, ErrorMessage, Header, Logo, Nav, NavLink, ViewMoreButton, BackButton, ButtonContainer } from "./style";
 
@@ -39,12 +39,13 @@ const Home: React.FC = () => {
   const auth = getAuth();
   const firestore = getFirestore();
 
+  
   const fetchData = async () => {
     try {
       const response = await axios.get<Game[]>(API_BASE_URL, { headers });
       const gamesWithFavorite = response.data.map((game) => ({
         ...game,
-        favorite: false, // Inicialmente, nenhum jogo está favoritado
+        favorite: false,
       }));
       setGames(gamesWithFavorite);
       setLoading(false);
@@ -61,6 +62,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     fetchData();
+    
   }, []);
 
   useEffect(() => {
@@ -108,7 +110,12 @@ const Home: React.FC = () => {
     try {
       const user = auth.currentUser;
       if (user) {
-        const favoriteGameRef: CollectionReference<DocumentData> = collection(firestore, "users", user.uid, "favorites");
+        const favoriteGameRef: CollectionReference<DocumentData> = collection(
+          firestore,
+          "users",
+          user.uid,
+          "favorites"
+        );
         if (game.favorite) {
           const gameDoc = doc(favoriteGameRef, game.id.toString());
           await deleteDoc(gameDoc);
@@ -117,10 +124,9 @@ const Home: React.FC = () => {
           await addDoc(favoriteGameRef, game);
           console.log("Jogo adicionado aos favoritos com sucesso!");
         }
-        const updatedGames = games.map((g) =>
-          g.id === game.id ? { ...g, favorite: !g.favorite } : g
+        setGames((prevGames) =>
+          prevGames.map((g) => (g.id === game.id ? { ...g, favorite: !g.favorite } : g))
         );
-        setGames(updatedGames);
       } else {
         console.log("Usuário não autenticado. Não é possível adicionar/remover dos favoritos.");
       }
@@ -128,6 +134,8 @@ const Home: React.FC = () => {
       console.error("Erro ao adicionar/remover jogo dos favoritos:", error);
     }
   };
+
+
 
   return (
     <Container>
@@ -157,6 +165,8 @@ const Home: React.FC = () => {
         <div>
           <div ref={gameListRef}></div>
           <FavoriteGames games={games} favoriteGames={filteredGames.map((game) => game.id)} onFavorite={handleFavoriteGame} />
+          
+    
           {filteredGames.length < games.length && (
             <>
               <ButtonContainer>
