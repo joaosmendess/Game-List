@@ -23,7 +23,7 @@ export const Logo = styled.div`
 
 export const Form = styled.form`
   width: 300px;
-  height: 425px;
+  height: 380px;
   padding: 30px;
   border-radius: 10px;
   background-color:#313862;
@@ -45,6 +45,7 @@ export const Button = styled.button`
   color: #fff;
   background-color:  #f7931B;
   transition: opacity 0.3s;
+  margin: 20px 0;
 
   &:hover {
     opacity: 0.7;
@@ -62,6 +63,7 @@ color: #FFF;
   text-decoration: none;
   font-weight: 100;
   transition: color 0.3s ease;
+  
 
   &:hover {
     color:  #f7931B;

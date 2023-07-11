@@ -54,7 +54,7 @@ const Login: React.FC<ILoginProps> = ({ UserEmail,
       })
       .catch((error) => {
         console.error("Erro ao fazer login:", error);
-        setErrorMessage("Erro ao fazer login. Verifique suas credenciais.");
+        setErrorMessage("Erro ao fazer login. Email e/ou senha inválidos.");
       });
     
     }

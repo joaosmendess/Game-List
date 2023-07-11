@@ -16,6 +16,8 @@ import {
   sendEmailVerification,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
+
+
 // https://firebase.google.com/docs/auth/web/password-auth?hl=pt-br#web-modular-api
 interface IRegisterProps {
   UserEmail: string;

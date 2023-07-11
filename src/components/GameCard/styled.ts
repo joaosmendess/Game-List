@@ -39,8 +39,6 @@ export const CardWrapper = styled.div<{ genreChange: boolean }>`
     css`
       animation: ${genreChangeAnimation} 1s;
     `};
-
-  
 `;
 
 export const Title = styled.h3`
@@ -62,3 +60,15 @@ export const Image = styled.img`
 `;
 
 export const Link = styled.a``;
+
+export const FavoriteButton = styled.button<{ isFavorite: boolean }>`
+  background-color: transparent;
+  border: none;
+  color: ${({ isFavorite }) => (isFavorite ? "#ff0000" : "#ffffff")};
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    animation: ${hoverAnimation} 1s ease-in-out infinite;
+  }
+`;

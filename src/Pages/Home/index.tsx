@@ -1,27 +1,29 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { collection, addDoc, deleteDoc, getFirestore, doc, CollectionReference, DocumentData } from "firebase/firestore";
+import { BsGithub, BsLinkedin, BsExclamationTriangle } from "react-icons/bs";
+import { Container, ErrorMessage, Header, Logo, Nav, NavLink, ViewMoreButton, BackButton, ButtonContainer } from "./style";
 
-import GameList from "../../components/GameList";
 import GenreFilter from "../../components/GenreFilter";
 import Loader from "../../components/Loader";
 import SearchInput from "../../components/SearchInput";
+import FavoriteGames from "../../components/FavoriteGames";
 
-import { BsGithub, BsLinkedin, BsExclamationTriangle } from "react-icons/bs";
+import { getAuth } from "firebase/auth";
 
-import { Container, ErrorMessage, Header, Logo, Nav, NavLink, ViewMoreButton, BackButton, ButtonContainer  } from "./style";
-
-const API_BASE_URL =
-  "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
+const API_BASE_URL = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
 const headers = {
   "dev-email-address": "joaosilva0721@gmail.com",
 };
 
 interface Game {
+  id: number;
   title: string;
   thumbnail: string;
   genre: string;
   game_url: string;
+  favorite: boolean;
 }
 
 const Home: React.FC = () => {
@@ -34,22 +36,25 @@ const Home: React.FC = () => {
 
   const gameListRef = useRef<HTMLDivElement>(null);
 
+  const auth = getAuth();
+  const firestore = getFirestore();
+
   const fetchData = async () => {
     try {
       const response = await axios.get<Game[]>(API_BASE_URL, { headers });
-      setGames(response.data);
+      const gamesWithFavorite = response.data.map((game) => ({
+        ...game,
+        favorite: false, // Inicialmente, nenhum jogo está favoritado
+      }));
+      setGames(gamesWithFavorite);
       setLoading(false);
       setErrorMessage("");
     } catch (error: any) {
       setLoading(false);
       if ([500, 502, 503, 504, 507, 508, 509].includes(error.response.status)) {
-        setErrorMessage(
-          "O servidor falhou em responder, tente recarregar a página"
-        );
+        setErrorMessage("O servidor falhou em responder, tente recarregar a página");
       } else {
-        setErrorMessage(
-          "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
-        );
+        setErrorMessage("O servidor não conseguirá responder por agora, tente voltar novamente mais tarde");
       }
     }
   };
@@ -59,7 +64,6 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Filtrar jogos pelo gênero selecionado
     if (selectedGenre === "") {
       setFilteredGames(games.slice(0, visibleGames));
     } else {
@@ -70,12 +74,12 @@ const Home: React.FC = () => {
 
   const handleGenreSelect = (genre: string) => {
     setSelectedGenre(genre);
-    setVisibleGames(12); // Redefinir o número de jogos visíveis ao selecionar um gênero
+    setVisibleGames(12);
   };
 
   const handleGenreDeselect = () => {
     setSelectedGenre("");
-    setVisibleGames(12); // Redefinir o número de jogos visíveis ao desmarcar o gênero
+    setVisibleGames(12);
   };
 
   const handleSearch = (searchText: string) => {
@@ -85,7 +89,7 @@ const Home: React.FC = () => {
       const filtered = games.filter((game) =>
         game.title.toLowerCase().includes(searchText.toLowerCase())
       );
-      setFilteredGames(filtered.slice(0, visibleGames)); 
+      setFilteredGames(filtered.slice(0, visibleGames));
     }
   };
 
@@ -100,34 +104,47 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleFavoriteGame = async (game: Game) => {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const favoriteGameRef: CollectionReference<DocumentData> = collection(firestore, "users", user.uid, "favorites");
+        if (game.favorite) {
+          const gameDoc = doc(favoriteGameRef, game.id.toString());
+          await deleteDoc(gameDoc);
+          console.log("Jogo removido dos favoritos com sucesso!");
+        } else {
+          await addDoc(favoriteGameRef, game);
+          console.log("Jogo adicionado aos favoritos com sucesso!");
+        }
+        const updatedGames = games.map((g) =>
+          g.id === game.id ? { ...g, favorite: !g.favorite } : g
+        );
+        setGames(updatedGames);
+      } else {
+        console.log("Usuário não autenticado. Não é possível adicionar/remover dos favoritos.");
+      }
+    } catch (error) {
+      console.error("Erro ao adicionar/remover jogo dos favoritos:", error);
+    }
+  };
+
   return (
     <Container>
       <Header>
         <Logo> GAME LIST</Logo>
         <Nav>
-          <NavLink
-            href="https://github.com/joaosmendess"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <NavLink href="https://github.com/joaosmendess" target="_blank" rel="noopener noreferrer">
             <BsGithub size={28} />
           </NavLink>
-          <NavLink
-            href="https://www.linkedin.com/in/joaosmendess/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <NavLink href="https://www.linkedin.com/in/joaosmendess/" target="_blank" rel="noopener noreferrer">
             <BsLinkedin size={28} />
           </NavLink>
         </Nav>
       </Header>
 
       <SearchInput onSearch={handleSearch} />
-      <GenreFilter
-        games={games}
-        onGenreSelect={handleGenreSelect}
-        onGenreDeselect={handleGenreDeselect}
-      />
+      <GenreFilter games={games} onGenreSelect={handleGenreSelect} onGenreDeselect={handleGenreDeselect} />
 
       {loading ? (
         <Loader />
@@ -138,9 +155,8 @@ const Home: React.FC = () => {
         </ErrorMessage>
       ) : (
         <div>
-          <div ref={gameListRef}>
-            <GameList games={filteredGames} />
-          </div>
+          <div ref={gameListRef}></div>
+          <FavoriteGames games={games} favoriteGames={filteredGames.map((game) => game.id)} onFavorite={handleFavoriteGame} />
           {filteredGames.length < games.length && (
             <>
               <ButtonContainer>
