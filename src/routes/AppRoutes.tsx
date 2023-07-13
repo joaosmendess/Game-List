@@ -12,7 +12,7 @@ const AppRoutes: React.FC = () => {
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login UserEmail={""} UserPassword={""} />} />
-      <Route path="/register" element={<Register UserEmail={""} UserPassword={""} />} />
+      <Route path="/register" element={<Register  UserEmail={""} UserPassword={""} />} />
       <Route path="/home" element={<Home />} /> {/* Usar o wrapper de rota para verificar a autenticação */}
     </Routes>
   );

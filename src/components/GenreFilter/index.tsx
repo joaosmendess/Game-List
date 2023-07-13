@@ -3,6 +3,7 @@ import { FilterWrapper, FilterButton } from "./style";
 
 interface IGame {
   genre: string;
+  favorite: boolean;
 }
 
 interface IGenreFilterProps {
@@ -16,7 +17,11 @@ const GenreFilter: React.FC<IGenreFilterProps> = ({
   onGenreSelect,
   onGenreDeselect
 }) => {
-  const genres = [...new Set(["All", ...games.map((game) => game.genre)])];
+  const genres = [
+    "All",
+    
+    ...new Set(games.map((game) => game.genre))
+  ];
 
   const [selectedGenre, setSelectedGenre] = useState("All");
 
@@ -24,7 +29,7 @@ const GenreFilter: React.FC<IGenreFilterProps> = ({
     if (genre === selectedGenre) {
       setSelectedGenre("");
       onGenreDeselect();
-    } else if (genre === "All") { 
+    } else if (genre === "All") {
       setSelectedGenre("All");
       onGenreSelect("");
     } else {
@@ -33,8 +38,7 @@ const GenreFilter: React.FC<IGenreFilterProps> = ({
     }
   };
 
-  // Verificar se há mais de um gênero disponível, excluindo o gênero "All"
-  const hasMultipleGenres = genres.length > 1;
+  const hasMultipleGenres = genres.length > 3;
 
   return (
     <FilterWrapper>

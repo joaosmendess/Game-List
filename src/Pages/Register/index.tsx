@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Input from "../../components/Input";
 import { BsController } from "react-icons/bs";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   Container,
   Form,
@@ -9,6 +12,7 @@ import {
   Logo,
   InputContainer,
   StyleLink,
+  
 } from "./style";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebaseConfig";
@@ -17,8 +21,6 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-
-// https://firebase.google.com/docs/auth/web/password-auth?hl=pt-br#web-modular-api
 interface IRegisterProps {
   UserEmail: string;
   UserPassword: string;
@@ -27,25 +29,37 @@ interface IRegisterProps {
 const Register: React.FC<IRegisterProps> = ({ UserEmail, UserPassword }) => {
   const [email, setEmail] = useState(UserEmail);
   const [password, setPassword] = useState(UserPassword);
+  const [name, setName] = useState("");
+
   const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(email==="" || password ===""){
+      toast.error("Erro ao registrar. Preencha todos os dados.")
+      return
+    }
+    if (password.length < 6) {
+      toast.error("A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+
+  
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
-        // Signed in
         const user = userCredential.user;
-        if (userCredential && user) {
-          // Registro realizado com sucesso
-          await sendEmailVerification(userCredential.user);
-          console.log("E-mail de confirmação enviado!");
-          console.log("Registro realizado com sucesso!");
+        if (user) {
+          // Salvar o nome no Local Storage
+          localStorage.setItem("userName", name);
+          toast.success("Registro realizado com sucesso!");
+
+          await sendEmailVerification(user);
+          toast.success("Registro realizado com sucesso!");
           navigate("/login"); // Redirecionar para a página de login
         }
       })
-      .catch((error) => {
-        console.log(error);
-        
+      .catch(() => {
+        toast.error("Erro ao registrar. Preencha todos os dados.");
       });
   };
 
@@ -59,7 +73,7 @@ const Register: React.FC<IRegisterProps> = ({ UserEmail, UserPassword }) => {
       <Form>
         <FormTitle>Cadastrar</FormTitle>
         <InputContainer>
-          <Input type="text" required placeholder="Nome" />
+          <Input type="text" required placeholder="Nome" onChange={(e) => setName(e.target.value)} />
         </InputContainer>
         <InputContainer>
           <Input
@@ -91,6 +105,19 @@ const Register: React.FC<IRegisterProps> = ({ UserEmail, UserPassword }) => {
           Cadastrar
         </Button>
       </Form>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+
     </Container>
   );
 };

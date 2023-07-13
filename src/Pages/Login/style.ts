@@ -28,7 +28,7 @@ export const Logo = styled.div`
 
 export const Form = styled.form`
   width: 300px;
-  height: 300px;
+  height: 340px;
   padding: 25px;
   border-radius: 10px;
   background-color: #313862;
@@ -64,7 +64,8 @@ color: #FFF;
   font-weight: 100;
   transition: color 0.3s ease;
   display: flex;
-  margin: 2px 0;
+  margin: 5px 0;
+  cursor: pointer;
   
 
   &:hover {
@@ -77,3 +78,32 @@ export const ErrorMessage =styled.p `
   font-size: 14px;
   margin-top: 10px;
 `
+
+export const PasswordContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+export const PasswordInput = styled.input`
+ 
+  width: 100%;
+
+margin: 7px 0 ;
+padding: 10px;
+
+border-radius: 5px;
+`;
+
+export const PasswordToggle = styled.div`
+  position: absolute;
+  top: 56%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #f7931B;
+  }
+`;

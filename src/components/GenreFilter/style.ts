@@ -64,7 +64,7 @@ font-size: 12px;
   }
 
   @media (min-width: 1200px) {
-    width: 70px;
+    width: 72px;
   
   }
   ${(props) =>

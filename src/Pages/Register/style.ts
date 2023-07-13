@@ -69,3 +69,9 @@ color: #FFF;
     color:  #f7931B;
   }
 `;
+
+export const ErrorMessage =styled.p `
+ color: red;
+  font-size: 14px;
+  margin-top: 10px;
+`

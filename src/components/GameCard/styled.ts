@@ -41,12 +41,12 @@ export const CardWrapper = styled.div<{ genreChange: boolean }>`
     `};
 `;
 
-export const Title = styled.h3`
+export const GameTitle = styled.h3`
   font-size: 18px;
   padding: 5px;
 `;
 
-export const Image = styled.img`
+export const GameImage = styled.img`
   width: 100%;
   max-height: 300px;
   object-fit: contain;
@@ -59,9 +59,9 @@ export const Image = styled.img`
   }
 `;
 
-export const Link = styled.a``;
+export const GameLink = styled.a``;
 
-export const FavoriteButton = styled.button<{ isFavorite: boolean }>`
+export const FavButton = styled.button<{ isFavorite: boolean }>`
   background-color: transparent;
   border: none;
   color: ${({ isFavorite }) => (isFavorite ? "#ff0000" : "#ffffff")};

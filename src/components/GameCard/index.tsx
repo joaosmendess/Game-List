@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { CardWrapper, Title, Image, Link } from "./styled";
-import FavoriteButton from "../FavoriteButton";
+import { CardWrapper,  GameImage, GameLink, GameTitle } from "./styled";
+
 
 interface GameCardProps {
   title: string;
   image: string;
   game_url: string;
   genre: string;
-  favorite: boolean;
-  onFavorite: () => void;
+
 }
 
 const GameCard: React.FC<GameCardProps> = ({
@@ -16,11 +15,11 @@ const GameCard: React.FC<GameCardProps> = ({
   image,
   game_url,
   genre,
-  favorite,
-  onFavorite,
+  
+  
 }) => {
-
   const [genreChange, setGenreChange] = useState(false);
+  
 
   useEffect(() => {
     setGenreChange(true);
@@ -29,14 +28,14 @@ const GameCard: React.FC<GameCardProps> = ({
     }, 1000);
     return () => clearTimeout(timeout);
   }, [genre]);
+
+  
   return (
     <CardWrapper genreChange={genreChange}>
-      <Link href={game_url} target="_blank" rel="noopener noreferrer">
-        <Image src={image} alt={title} />
-      </Link>
-      <Title>{title}</Title>
-
-      <FavoriteButton isFavorite={favorite} onClick={onFavorite} />
+      <GameLink href={game_url} target="_blank" rel="noopener noreferrer">
+        <GameImage src={image} alt={title} />
+      </GameLink>
+      <GameTitle>{title}</GameTitle>
     </CardWrapper>
   );
 };

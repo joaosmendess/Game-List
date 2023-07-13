@@ -46,6 +46,7 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+ 
 `;
 
 export const Logo = styled.h1`
@@ -113,3 +114,61 @@ margin-top: 16px;
   }
 
 `;
+
+
+export const WelcomeMensage =styled.p `
+ font-size: 24px;
+  font-weight: bold;
+  
+  text-align: center;
+
+  span {
+    color: #ff9900;
+    text-decoration: none;
+
+
+  }
+
+
+  @media (max-width: 416px ) {
+  font-size: 16px;
+  
+
+  }
+`
+
+export const WelcomeContainer = styled.div `
+display: flex;
+flex-direction: column;
+margin-top: 12px 0; 
+
+
+
+`
+
+export const LogoContainer = styled.div `
+margin-top: 15px 0; 
+
+`
+
+export const LogoutButton = styled.button `
+  background-color: #f44336;
+  margin: 8px;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #c62828;}
+
+    @media (max-width: 416px ) {
+  font-size: 10px;
+  
+
+  }
+   
+`
