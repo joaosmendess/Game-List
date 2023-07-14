@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { CardWrapper,  GameImage, GameLink, GameTitle } from "./styled";
+import FavoriteButton from "../FavoriteButton";
 
+interface Game {
+  id: number;
+  title: string;
+  thumbnail: string;
+  game_url: string;
+  genre: string;
+  favorite: boolean;
+}
 
 interface GameCardProps {
   title: string;
   image: string;
   game_url: string;
   genre: string;
-
+game: Game 
 }
 
 const GameCard: React.FC<GameCardProps> = ({
@@ -15,6 +24,7 @@ const GameCard: React.FC<GameCardProps> = ({
   image,
   game_url,
   genre,
+  game
   
   
 }) => {
@@ -36,6 +46,7 @@ const GameCard: React.FC<GameCardProps> = ({
         <GameImage src={image} alt={title} />
       </GameLink>
       <GameTitle>{title}</GameTitle>
+      <FavoriteButton game={game}/>
     </CardWrapper>
   );
 };

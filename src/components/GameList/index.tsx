@@ -8,6 +8,7 @@ interface Game {
   thumbnail: string;
   game_url: string;
   genre: string;
+  favorite: boolean;
   
 }
 
@@ -25,7 +26,7 @@ const GameList: React.FC<GameListProps> = ({ games,  }) => {
           image={game.thumbnail}
           game_url={game.game_url}
           genre={game.genre}
-        />
+          game={game}        />
       ))}
     </ListWrapper>
   );
