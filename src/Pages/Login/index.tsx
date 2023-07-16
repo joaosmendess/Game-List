@@ -49,8 +49,9 @@ const Login: React.FC<ILoginProps> = ({ UserEmail, UserPassword }) => {
         const user = userCredential.user;
 
         if (user) {
-          toast.success("Login realizado com sucesso!");
          {user ? navigate("/home") : navigate("/login")  }
+         toast.success("Login realizado com sucesso!");
+
           console.log("Muito feliz com o que pude entregar nesse projeto, nunca tinha utilizado firebase antes, foi um desfio que curti muito fazer. Infelizmnete poderia ter feito mais,porém não tinha mais tempo. Muito obrigado pela oportunidade!");
           
         } else {

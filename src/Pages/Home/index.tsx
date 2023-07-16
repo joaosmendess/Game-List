@@ -198,7 +198,7 @@ const Home: React.FC = () => {
 
         <WelcomeContainer>
           <WelcomeMessage>
-            Bem-vindo,  <span>{userName}</span>!
+            Bem-vindo, <span>{userName}</span>!
           </WelcomeMessage>
 
           <LogoutButton onClick={handleSignOut}>Sair da Conta</LogoutButton>
@@ -223,7 +223,14 @@ const Home: React.FC = () => {
         </ErrorMessage>
       ) : (
         <div>
-         
+          <div className="sort-button-container">
+          <SortButton
+  className={sortingOrder === "desc" ? "active" : ""}
+  onClick={handleSortingOrderChange} // Remova os parênteses extras ao redor da função
+>
+</SortButton>
+
+          </div>
 
           <GameList
             games={sortedFilteredGames}
