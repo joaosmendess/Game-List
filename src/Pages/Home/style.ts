@@ -116,8 +116,18 @@ margin-top: 16px;
 `;
 
 
-export const WelcomeMensage =styled.p `
- font-size: 24px;
+
+
+export const WelcomeContainer = styled.div `
+display: flex;
+flex-direction: column;
+margin-top: 12px 0; 
+
+
+
+`
+export const WelcomeMessage =styled.p `
+font-size: 24px;
   font-weight: bold;
   
   text-align: center;
@@ -135,15 +145,6 @@ export const WelcomeMensage =styled.p `
   
 
   }
-`
-
-export const WelcomeContainer = styled.div `
-display: flex;
-flex-direction: column;
-margin-top: 12px 0; 
-
-
-
 `
 
 export const LogoContainer = styled.div `
@@ -172,3 +173,16 @@ export const LogoutButton = styled.button `
   }
    
 `
+
+export const SortButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: #FFF;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: gold;
+  }
+`;

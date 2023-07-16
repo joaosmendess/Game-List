@@ -1,15 +1,14 @@
+// FavoriteButton.tsx
 import React, { useState, useEffect } from "react";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { FavButton } from "./style";
-
+import { FavButton,FavDiv } from "./style";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { firestore } from "../../services/firebaseConfig";
 import { auth } from "../../services/firebaseConfig";
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { useSpring, animated } from "react-spring";
+
 
 interface Game {
   id: number;
@@ -19,12 +18,14 @@ interface Game {
   genre: string;
   favorite: boolean;
 }
+
 interface FavoriteButtonProps {
   game: Game;
 }
 
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ game }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+ 
 
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
@@ -86,18 +87,16 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ game }) => {
         if (isGameFavorited) {
           // Remover o jogo dos favoritos
           await setDoc(userRef, {
-            favorites: userData.favorites.filter(
-              (id: number) => id !== game.id
-            ),
+            favorites: userData.favorites.filter((id: number) => id !== game.id),
           });
-
+         
           toast.error("O jogo foi removido dos favoritos");
         } else {
           // Adicionar o jogo aos favoritos
           await setDoc(userRef, {
             favorites: [...userData.favorites, game.id],
           });
-          console.log(game.title);
+        
           toast.success("O jogo foi adicionado aos favoritos");
         }
       } else {
@@ -113,26 +112,31 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ game }) => {
   };
 
   return (
-
-    <><ToastContainer
-      position="top-left"
-      autoClose={5000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="dark" /><FavButton onClick={handleToggleFavorite}>
-        <animated.div style={springProps}>
+    <>
+      <ToastContainer
+        position="top-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+       <FavDiv >
+      <FavButton onClick={handleToggleFavorite}>
+        <animated.div style={springProps}  >
+         
           <FavoriteIcon color={isFavorite ? "secondary" : "inherit"} />
-        </animated.div>
-      </FavButton></>
 
-    
+          
+        </animated.div>
+      </FavButton>
+      </FavDiv>
+    </>
   );
- 
 };
 
 export default FavoriteButton;

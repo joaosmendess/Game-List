@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BsGithub, BsLinkedin, BsExclamationTriangle } from "react-icons/bs";
 
-
 import {
   Container,
   ErrorMessage,
@@ -13,21 +12,20 @@ import {
   ViewMoreButton,
   BackButton,
   ButtonContainer,
-  WelcomeMensage,
+  WelcomeMessage,
   LogoutButton,
   WelcomeContainer,
-  LogoContainer
+  LogoContainer,
+  SortButton
 } from "./style";
 import GenreFilter from "../../components/GenreFilter";
 import Loader from "../../components/Loader";
 import SearchInput from "../../components/SearchInput";
 import GameList from "../../components/GameList";
-
 import { auth } from "../../services/firebaseConfig";
 import { signOut } from "firebase/auth";
 
 import { useNavigate } from "react-router-dom";
-
 
 interface Game {
   id: number;
@@ -36,10 +34,11 @@ interface Game {
   game_url: string;
   genre: string;
   favorite: boolean;
+  rating: number;
 }
 
-
-const API_BASE_URL = "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
+const API_BASE_URL =
+  "https://games-test-api-81e9fb0d564a.herokuapp.com/api/data/";
 
 const headers = {
   "dev-email-address": "joaosilva0721@gmail.com",
@@ -53,9 +52,9 @@ const Home: React.FC = () => {
   const [visibleGames, setVisibleGames] = useState(12);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [userName, setUserName] = useState<string>("");
+  const [sortingOrder, setSortingOrder] = useState<"asc" | "desc">("asc");
 
   const navigate = useNavigate();
-
 
   const fetchData = async () => {
     try {
@@ -64,12 +63,18 @@ const Home: React.FC = () => {
       setLoading(false);
     } catch (error: any) {
       setLoading(false);
-      if ([500, 502, 503, 504, 507, 508, 509].includes(error.response?.status)) {
-        setErrorMessage("O servidor falhou em responder, tente recarregar a página");
+      if (
+        [500, 502, 503, 504, 507, 508, 509].includes(error.response?.status)
+      ) {
+        setErrorMessage(
+          "O servidor falhou em responder, tente recarregar a página"
+        );
       } else {
-        setErrorMessage("O servidor não conseguirá responder por agora, tente voltar novamente mais tarde");
+        setErrorMessage(
+          "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
+        );
       }
-    } 
+    }
   };
 
   useEffect(() => {
@@ -79,6 +84,7 @@ const Home: React.FC = () => {
       setUserName(storedUserName);
     }
   }, []);
+
   useEffect(() => {
     if (selectedGenre === "") {
       setFilteredGames(games.slice(0, visibleGames));
@@ -126,42 +132,54 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleSortingOrderChange = () => {
+    setSortingOrder(sortingOrder === "asc" ? "desc" : "asc");
+  };
+
+  const sortGamesByRating = (games: Game[]) => {
+    const sortedGames = [...games];
+    sortedGames.sort((a, b) => a.rating - b.rating);
+    if (sortingOrder === "desc") {
+      sortedGames.reverse();
+    }
+    return sortedGames;
+  };
+
+  const sortedFilteredGames = sortGamesByRating(filteredGames);
+
   return (
     <Container>
       <Header>
-        <LogoContainer><Logo>GAME LIST
-          
-          </Logo></LogoContainer>
-        
-       
+        <LogoContainer>
+          <Logo>GAME LIST</Logo>
+        </LogoContainer>
+
         <Nav>
-          
-          <NavLink href="https://github.com/seu-usuario-do-github" target="_blank" rel="noopener noreferrer">
+          <NavLink
+            href="https://github.com/seu-usuario-do-github"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <BsGithub size={28} />
           </NavLink>
 
-          <NavLink href="https://www.linkedin.com/seu-linkedin" target="_blank" rel="noopener noreferrer">
+          <NavLink
+            href="https://www.linkedin.com/seu-linkedin"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <BsLinkedin size={28} />
           </NavLink>
         </Nav>
 
         <WelcomeContainer>
+          <WelcomeMessage>
+            Bem-vindo, <span>{userName}</span>!
+          </WelcomeMessage>
 
-
-        <WelcomeMensage>Bem-vindo, <span>{userName}</span>!</WelcomeMensage>
-
-<LogoutButton  onClick={handleSignOut}>
-Sair da Conta
-</LogoutButton>
-
+          <LogoutButton onClick={handleSignOut}>Sair da Conta</LogoutButton>
         </WelcomeContainer>
-        
-
-
       </Header>
-
-
-
 
       <SearchInput onSearch={handleSearch} />
 
@@ -170,7 +188,6 @@ Sair da Conta
         onGenreSelect={handleGenreSelect}
         onGenreDeselect={handleGenreDeselect}
       />
-
 
       {loading ? (
         <Loader />
@@ -181,7 +198,16 @@ Sair da Conta
         </ErrorMessage>
       ) : (
         <div>
-          <GameList games={filteredGames} />
+          <div className="sort-button-container">
+            <SortButton
+              className={sortingOrder === "desc" ? "active" : ""}
+              onClick={handleSortingOrderChange}
+            >
+              Ordenar por avaliação
+            </SortButton>
+          </div>
+
+          <GameList games={sortedFilteredGames} />
           {filteredGames.length < games.length && (
             <ButtonContainer>
               <ViewMoreButton onClick={handleGoBack}>Voltar</ViewMoreButton>
@@ -195,4 +221,3 @@ Sair da Conta
 };
 
 export default Home;
-

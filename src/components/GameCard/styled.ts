@@ -61,14 +61,14 @@ export const GameImage = styled.img`
 
 export const GameLink = styled.a``;
 
-export const FavButton = styled.button<{ isFavorite: boolean }>`
-  background-color: transparent;
-  border: none;
-  color: ${({ isFavorite }) => (isFavorite ? "#ff0000" : "#ffffff")};
-  font-weight: bold;
-  cursor: pointer;
+export const RatingContainer = styled.div`
+  display: flex;
 
-  &:hover {
-    animation: ${hoverAnimation} 1s ease-in-out infinite;
-  }
+`;
+
+export const FavoriteContainer = styled.div`
+  display: flex;
+  background-color: pink;
+  margin-left: 10px;
+  justify-content: space-between;
 `;
