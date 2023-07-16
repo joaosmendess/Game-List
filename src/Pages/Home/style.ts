@@ -121,10 +121,16 @@ margin-top: 16px;
 export const WelcomeContainer = styled.div `
 display: flex;
 flex-direction: column;
-margin-top: 12px 0; 
+margin-top: 13px 0; 
 
 
+@media (max-width: 416px ) {
+    display: flex;
+  margin-left: 8px;
+  
+  
 
+  }
 `
 export const WelcomeMessage =styled.p `
 font-size: 24px;
@@ -141,7 +147,10 @@ font-size: 24px;
 
 
   @media (max-width: 416px ) {
-  font-size: 16px;
+    display: flex;
+  font-size: 11px;
+  flex-wrap: nowrap;
+  
   
 
   }

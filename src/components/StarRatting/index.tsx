@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from './style';
 import Rating from '@material-ui/lab/Rating';
-
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { firestore, auth } from '../../services/firebaseConfig';
 
 interface StarRatingProps {
   initialRating: number;
@@ -12,16 +13,36 @@ const StarRating: React.FC<StarRatingProps> = ({ initialRating, gameId }) => {
   const [rating, setRating] = useState(initialRating);
 
   useEffect(() => {
-    const storedRating = localStorage.getItem(`rating:${gameId}`);
-    if (storedRating) {
-      setRating(Number(storedRating));
-    }
+    const fetchRating = async () => {
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const userRef = doc(firestore, 'users', user.uid, 'ratings', String(gameId));
+          const userSnapshot = await getDoc(userRef);
+          if (userSnapshot.exists()) {
+            setRating(userSnapshot.data().rating);
+          }
+        }
+      } catch (error) {
+        console.log('Erro ao obter a classificação:', error);
+      }
+    };
+
+    fetchRating();
   }, [gameId]);
 
-  const handleRatingChange = (_event: React.ChangeEvent<{}>, value: number | null) => {
+  const handleRatingChange = async (_event: React.ChangeEvent<{}>, value: number | null) => {
     if (value !== null) {
       setRating(value);
-      localStorage.setItem(`rating:${gameId}`, String(value));
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          const userRef = doc(firestore, 'users', user.uid, 'ratings', String(gameId));
+          await setDoc(userRef, { rating: value });
+        }
+      } catch (error) {
+        console.log('Erro ao salvar a classificação:', error);
+      }
     }
   };
 

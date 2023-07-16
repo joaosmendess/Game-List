@@ -39,7 +39,6 @@ export const FilterButton = styled.button<IFilterButtonProps>`
  margin: 2px;
  font-weight: bold;
  
- width: 72px;
 
 display: flex;
 justify-content: center;
@@ -64,7 +63,7 @@ font-size: 12px;
   }
 
   @media (min-width: 1200px) {
-    width: 72px;
+    width: 65px;
   
   }
   ${(props) =>

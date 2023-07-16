@@ -22,10 +22,10 @@ import GenreFilter from "../../components/GenreFilter";
 import Loader from "../../components/Loader";
 import SearchInput from "../../components/SearchInput";
 import GameList from "../../components/GameList";
-import { auth } from "../../services/firebaseConfig";
+import { auth, firestore } from "../../services/firebaseConfig";
 import { signOut } from "firebase/auth";
-
 import { useNavigate } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
 
 interface Game {
   id: number;
@@ -53,6 +53,7 @@ const Home: React.FC = () => {
   const [selectedGenre, setSelectedGenre] = useState("");
   const [userName, setUserName] = useState<string>("");
   const [sortingOrder, setSortingOrder] = useState<"asc" | "desc">("asc");
+  const [favoriteGames, setFavoriteGames] = useState<Game[]>([]);
 
   const navigate = useNavigate();
 
@@ -61,6 +62,24 @@ const Home: React.FC = () => {
       const response = await axios.get<Game[]>(API_BASE_URL, { headers });
       setGames(response.data);
       setLoading(false);
+
+      // Obter os jogos favoritos do usuário
+      const user = auth.currentUser;
+      if (user) {
+        const userRef = doc(firestore, "users", user.uid);
+        const userSnapshot = await getDoc(userRef);
+        const userData = userSnapshot.data();
+
+        if (userData && userData.favorites) {
+          const favoriteGamesData = response.data.filter((game) =>
+            userData.favorites.includes(game.id)
+          );
+          setFavoriteGames(favoriteGamesData);
+        } else {
+          // Se o usuário não tiver jogos favoritos, definir o estado favoriteGames como vazio
+          setFavoriteGames([]);
+        }
+      }
     } catch (error: any) {
       setLoading(false);
       if (
@@ -87,12 +106,14 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (selectedGenre === "") {
-      setFilteredGames(games.slice(0, visibleGames));
+      setFilteredGames(sortGamesByRating(games).slice(0, visibleGames));
+    } else if (selectedGenre === "Favorites") {
+      setFilteredGames(sortGamesByRating(favoriteGames).slice(0, visibleGames));
     } else {
       const filtered = games.filter((game) => game.genre === selectedGenre);
-      setFilteredGames(filtered.slice(0, visibleGames));
+      setFilteredGames(sortGamesByRating(filtered).slice(0, visibleGames));
     }
-  }, [games, selectedGenre, visibleGames]);
+  }, [games, favoriteGames, selectedGenre, sortingOrder, visibleGames]);
 
   const handleGenreSelect = (genre: string) => {
     setSelectedGenre(genre);
@@ -131,20 +152,23 @@ const Home: React.FC = () => {
       console.log("Erro ao sair da conta:", error);
     }
   };
-
   const handleSortingOrderChange = () => {
     setSortingOrder(sortingOrder === "asc" ? "desc" : "asc");
+    const sortedGames = sortGamesByRating(filteredGames);
+    setFilteredGames(sortedGames);
   };
-
+  
   const sortGamesByRating = (games: Game[]) => {
     const sortedGames = [...games];
-    sortedGames.sort((a, b) => a.rating - b.rating);
-    if (sortingOrder === "desc") {
-      sortedGames.reverse();
-    }
+    sortedGames.sort((a, b) => {
+      if (sortingOrder === "asc") {
+        return a.rating - b.rating;
+      } else {
+        return b.rating - a.rating;
+      }
+    });
     return sortedGames;
   };
-
   const sortedFilteredGames = sortGamesByRating(filteredGames);
 
   return (
@@ -174,7 +198,7 @@ const Home: React.FC = () => {
 
         <WelcomeContainer>
           <WelcomeMessage>
-            Bem-vindo, <span>{userName}</span>!
+            Bem-vindo,  <span>{userName}</span>!
           </WelcomeMessage>
 
           <LogoutButton onClick={handleSignOut}>Sair da Conta</LogoutButton>
@@ -187,6 +211,7 @@ const Home: React.FC = () => {
         games={games}
         onGenreSelect={handleGenreSelect}
         onGenreDeselect={handleGenreDeselect}
+        setFavoriteGames={setFavoriteGames}
       />
 
       {loading ? (
@@ -198,16 +223,14 @@ const Home: React.FC = () => {
         </ErrorMessage>
       ) : (
         <div>
-          <div className="sort-button-container">
-            <SortButton
-              className={sortingOrder === "desc" ? "active" : ""}
-              onClick={handleSortingOrderChange}
-            >
-              Ordenar por avaliação
-            </SortButton>
-          </div>
+         
 
-          <GameList games={sortedFilteredGames} />
+          <GameList
+            games={sortedFilteredGames}
+            favoriteGames={favoriteGames}
+            setFavoriteGames={setFavoriteGames}
+          />
+
           {filteredGames.length < games.length && (
             <ButtonContainer>
               <ViewMoreButton onClick={handleGoBack}>Voltar</ViewMoreButton>
