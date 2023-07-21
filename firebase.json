@@ -3,7 +3,7 @@
     {
       "source": "functions",
       "codebase": "default",
-     "predeploy": "npm --prefix functions run build"
+      "predeploy": "npm --prefix functions run build"
     },
     {
       "source": "regra",
@@ -22,7 +22,7 @@
   ],
   "firestore": {
     "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+    "indexes": "y"
   },
   "hosting": {
     "public": "public",
